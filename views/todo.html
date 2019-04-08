@@ -1,0 +1,84 @@
+
+  <div class = 'container mt-2' ng-controller='todoController'>
+    <div class = 'header row mb-3 mt-3'>
+      <div class = 'label col h2 mb-0'> {{user}}</div>
+      <div class = 'infoPanel col text-right align-self-end'>
+          {{filterAndCountLength(items, 'isActive', true)}} more to do, {{filterAndCountLength(items, 'isActive', false)}} done
+      </div>
+    </div>
+
+    <div class="filter row mb-3">
+      <input 
+        ng-model = 'findItem' 
+        class = 'form-control col-5 ml-3' 
+        type="text" 
+        id = 'filter' 
+        placeholder="input text here">
+
+      <div class="btn-group ml-auto col-5" role = 'group'>
+        <button 
+          id = "all"
+          type= 'buttton' 
+          class = 'all-tasks active btn btn-outline-info'>All
+        </button>
+        <button 
+          type= 'buttton' 
+          class = 'active-tasks btn btn-outline-info'>Active
+        </button>
+        <button 
+          type= 'buttton' 
+          class = 'done-tasks btn btn-outline-info'>Done
+        </button>
+      </div>
+      
+    </div>
+    <div class="list">
+      <ul class="list-group list-group-flush " ng-repeat = "item in items | filter: {name:findItem} ">
+          <li 
+          class = 'row mt-1'>
+            <div 
+              class="list-group-item col-7 mx-auto"
+              ng-class = "[(!item.isActive && 'done'), (item.isImportant && 'important')]"
+              >{{item.name}}<span class = 'whenAdd'> {{item.whenAdd}}</span> </div>
+            <div class="btn-group col-auto d-flex align-items-center mx-auto px-0" role = 'group'>
+                <button
+                  ng-click="changeParam(item.id, 'isImportant')"
+                  id = 'important' 
+                  type= 'buttton' 
+                  
+                  class = 'important btn mr-1 itemsBtn d-flex justify-content-center align-items-center'
+                  ng-class = "item.isImportant? 'isChecked': 'isNonChecked'">
+                  <i class="fas fa-fw fa-exclamation"></i>
+                </button>
+                <button 
+                  id = 'trash'
+                  type= 'buttton' 
+                  class = 'trash btn ml-1 itemsBtn d-flex justify-content-center align-items-center'
+                  ng-class = "item.isActive? 'isChecked': 'isNonChecked'"
+                  ng-click="changeParam(item.id, 'isActive')">             
+
+                  <i class="fas fa-fw fa-trash"></i>
+                </button>
+              </div>
+          </li>
+
+      </ul>
+    </div>
+    <div class="row my-3">
+        <input 
+          ng-model = 'data' 
+          class = 'form-control col-7 ml-3' 
+          type="text" 
+          id = 'filter' 
+          placeholder="input text here">
+        <div 
+          class="btn-group ml-auto col-4" 
+          role = 'group'>
+          <button 
+            type= 'buttton' 
+            class = 'all-tasks btn btn-info' 
+            ng-click="add(data)">Add
+          </button>          
+        </div>
+    </div>
+  </div>
